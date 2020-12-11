@@ -1,9 +1,5 @@
-import Element from "../element.js";
-
 export default function Station() {
-  const element = new Element();
   const resultContainer = document.getElementById("result-container");
-
   let stations = [
     "인천",
     "동인천",
@@ -17,21 +13,36 @@ export default function Station() {
     "오이도",
     "당고개",
   ];
+  let count = stations.length;
 
   this.addStation = () => {
     const stationInput = document.getElementById("station-name-input").value;
     const addHTML = `
-      <span>${stationInput} </span>
-      <button class="station-delete-button">삭제</button><br>`;
+      <div id="station${count}">
+        <span>${stationInput} </span>
+        <button class="station-delete-button" id="${count}">삭제</button><br>
+      </div>`;
     stations.push(stationInput);
     resultContainer.insertAdjacentHTML("beforeend", addHTML);
+    const newStation = document.getElementById(`${count}`);
+    newStation.addEventListener("click", (event) => this.deleteStation(event));
+    count++;
+  };
+
+  this.deleteStation = (event) => {
+    const targetId = event.target.id;
+    const delStation = document.getElementById(`station${targetId}`);
+    delStation.remove();
   };
 
   this.printStationList = () => {
     let listHTML = "";
     for (let i = 0; i < stations.length; i++) {
-      listHTML += `<span>${stations[i]} </span>`;
-      listHTML += `<button class="station-delete-button">삭제</button><br>`;
+      listHTML += `
+      <div id="station${i}">
+        <span>${stations[i]} </span>
+        <button class="station-delete-button" id="${i}">삭제</button><br>
+      </div>`;
     }
 
     return listHTML;

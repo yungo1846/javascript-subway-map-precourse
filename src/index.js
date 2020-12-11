@@ -8,10 +8,13 @@ export default function SubwayMap() {
   const MAP_PRINT_MANAGER_BUTTON_ID = "map-print-manager-button";
 
   this.onClickStation = () => {
-    console.log("clicked");
     station.render();
     const stationInputBtn = document.getElementById("station-add-button");
     stationInputBtn.addEventListener("click", station.addStation);
+    const stationDelBtns = document.getElementsByClassName("station-delete-button");
+    for (let i = 0; i < stationDelBtns.length; i++) {
+      stationDelBtns[i].addEventListener("click", (event) => station.deleteStation(event));
+    }
   };
 
   stationBtn.addEventListener("click", this.onClickStation);
