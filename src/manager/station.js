@@ -1,3 +1,6 @@
+import { lengthCheck } from "../inputCheck.js";
+import { alertMessage } from "../alertMessage.js";
+
 export default function Station() {
   const resultContainer = document.getElementById("result-container");
   let stations = [
@@ -17,6 +20,10 @@ export default function Station() {
 
   this.addStation = () => {
     const stationInput = document.getElementById("station-name-input").value;
+    if (!lengthCheck(stationInput)) {
+      alert(`${alertMessage.SHORT_LENGTH_ERROR}`);
+      return;
+    }
     const addHTML = `
       <div id="station${count}">
         <span>${stationInput} </span>
