@@ -20,17 +20,18 @@ export default function Station() {
 
   this.addStation = () => {
     const stationInput = document.getElementById("station-name-input").value;
+    const stationTable = document.getElementById("station-table");
     if (!lengthCheck(stationInput)) {
       alert(`${alertMessage.SHORT_LENGTH_ERROR}`);
       return;
     }
     const addHTML = `
-      <div id="station${count}">
-        <span>${stationInput} </span>
-        <button class="station-delete-button" id="${count}">삭제</button><br>
-      </div>`;
+      <tr id="station${count}">
+        <td><span>${stationInput} </span></td>
+        <td><button class="station-delete-button" id="${count}">삭제</button></td>
+      </tr>`;
     stations.push(stationInput);
-    resultContainer.insertAdjacentHTML("beforeend", addHTML);
+    stationTable.insertAdjacentHTML("beforeend", addHTML);
     const newStation = document.getElementById(`${count}`);
     newStation.addEventListener("click", (event) => this.deleteStation(event));
     count++;
@@ -43,15 +44,15 @@ export default function Station() {
   };
 
   this.printStationList = () => {
-    let listHTML = "";
+    let listHTML = `<table border="1" id="station-table"><th>역 이름</th><th>설정</th>`;
     for (let i = 0; i < stations.length; i++) {
       listHTML += `
-      <div id="station${i}">
-        <span>${stations[i]} </span>
-        <button class="station-delete-button" id="${i}">삭제</button><br>
-      </div>`;
+      <tr id="station${i}">
+        <td><span>${stations[i]} </span></td>
+        <td><button class="station-delete-button" id="${i}">삭제</button></td>
+      </tr>`;
     }
-
+    listHTML += `</table>`;
     return listHTML;
   };
 
