@@ -1,15 +1,17 @@
 import Station from "./manager/station.js";
 import Line from "./manager/line.js";
 import Section from "./manager/section.js";
+import MapPrint from "./manager/mapPrint.js";
 
 export default function SubwayMap() {
   const station = new Station();
   const line = new Line();
   const section = new Section();
+  const mapPrint = new MapPrint();
   const stationBtn = document.getElementById("station-manager-button");
   const lineBtn = document.getElementById("line-manager-button");
   const sectionBtn = document.getElementById("section-manager-button");
-  const MAP_PRINT_MANAGER_BUTTON_ID = "map-print-manager-button";
+  const mapPrintBtn = document.getElementById("map-print-manager-button");
   const resultContainer = document.getElementById("result-container");
 
   this.onClickStation = () => {
@@ -43,9 +45,15 @@ export default function SubwayMap() {
     }
   };
 
+  this.onClickMapPrint = () => {
+    resultContainer.innerHTML = "";
+    mapPrint.render(line.lines);
+  };
+
   stationBtn.addEventListener("click", this.onClickStation);
   lineBtn.addEventListener("click", this.onClickLine);
   sectionBtn.addEventListener("click", this.onClickSection);
+  mapPrintBtn.addEventListener("click", this.onClickMapPrint);
 }
 
 new SubwayMap();
