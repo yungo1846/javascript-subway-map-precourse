@@ -1,8 +1,9 @@
-import { isSatisfyLength, isStationAlreadyExist } from "../inputCheck.js";
+import { isSatisfyLength, isStationAlreadyExist, isStationOnLine } from "../inputCheck.js";
 import { alertMessage } from "../alertMessage.js";
 
 export default function Station() {
   const resultContainer = document.getElementById("result-container");
+  let lines;
   this.stations = [
     "인천",
     "동인천",
@@ -22,10 +23,10 @@ export default function Station() {
     const stationInput = document.getElementById("station-name-input").value;
     const stationTable = document.getElementById("station-table");
     if (!isSatisfyLength(stationInput)) {
-      alert(`${alertMessage.SHORT_LENGTH_ERROR}`);
+      alert(alertMessage.SHORT_LENGTH_ERROR);
       return;
     } else if (isStationAlreadyExist(this.stations, stationInput)) {
-      alert(`${alertMessage.SAME_STATION_EXIST_ERROR}`);
+      alert(alertMessage.SAME_STATION_EXIST_ERROR);
       return;
     }
     const addHTML = `
@@ -44,6 +45,10 @@ export default function Station() {
     const targetId = event.target.id;
     const targetValue = event.target.value;
     const delStation = document.getElementById(`station${targetId}`);
+    if (isStationOnLine(lines, targetValue)) {
+      alert(alertMessage.DELETE_STATION_ON_LINE_MESSAGE);
+      return;
+    }
     delStation.remove();
     this.stations.splice(this.stations.indexOf(targetValue), 1);
   };
@@ -72,7 +77,8 @@ export default function Station() {
     return stationListHtml;
   };
 
-  this.render = () => {
+  this.render = (lineList) => {
+    lines = lineList;
     resultContainer.insertAdjacentHTML("beforeend", this.printInput() + this.printStationList());
   };
 }

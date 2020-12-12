@@ -17,22 +17,49 @@ export function isSameDestination(start, end) {
   return result;
 }
 
-export function isStationAlreadyExist(list, name) {
+export function isStationAlreadyExist(stations, name) {
   let result = false;
-  for (let i = 0; i < list.length; i++) {
-    if (name === list[i]) {
-      return true;
+  for (let i = 0; i < stations.length; i++) {
+    if (name === stations[i]) {
+      result = true;
+      break;
     }
   }
 
   return result;
 }
 
-export function isLineAlreadyExist(list, name) {
+export function isLineAlreadyExist(lines, name) {
   let result = false;
-  for (let i = 0; i < list.length; i++) {
-    if (name === list[i].name) {
-      return true;
+  for (let i = 0; i < lines.length; i++) {
+    if (name === lines[i].name) {
+      result = true;
+      break;
+    }
+  }
+
+  return result;
+}
+
+function _isStationOnLine(sections, name) {
+  let result = false;
+  for (let i = 0; i < sections.length; i++) {
+    if (name === sections[i]) {
+      result = true;
+      break;
+    }
+  }
+
+  return result;
+}
+
+export function isStationOnLine(lines, name) {
+  let result = false;
+  console.log(lines, name);
+  for (let i = 0; i < lines.length; i++) {
+    if (_isStationOnLine(lines[i].sections, name)) {
+      result = true;
+      break;
     }
   }
 
