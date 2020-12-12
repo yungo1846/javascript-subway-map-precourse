@@ -1,4 +1,5 @@
 import { constant } from "./constant.js";
+
 export function isSatisfyLength(len) {
   let result = true;
   if (String(len).length < constant.minLength) {
@@ -41,6 +42,18 @@ export function isLineAlreadyExist(lines, name) {
   return result;
 }
 
+export function isSectionAlreadyExist(sections, name) {
+  let result = false;
+  for (let i = 0; i < sections.length; i++) {
+    if (name === sections[i]) {
+      result = true;
+      break;
+    }
+  }
+
+  return result;
+}
+
 function _isStationOnLine(sections, name) {
   let result = false;
   for (let i = 0; i < sections.length; i++) {
@@ -55,12 +68,20 @@ function _isStationOnLine(sections, name) {
 
 export function isStationOnLine(lines, name) {
   let result = false;
-  console.log(lines, name);
   for (let i = 0; i < lines.length; i++) {
     if (_isStationOnLine(lines[i].sections, name)) {
       result = true;
       break;
     }
+  }
+
+  return result;
+}
+
+export function isSatisfyMinNumOfStations(line) {
+  let result = false;
+  if (line.sections.length > constant.minStations) {
+    result = true;
   }
 
   return result;

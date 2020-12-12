@@ -37,7 +37,7 @@ export default function SubwayMap() {
   };
 
   this.onClickSection = () => {
-    resultContainer.innerHTML = "";
+    resultContainer.innerHTML = ``;
     section.render(station, line);
     const sectionSelectBtn = document.getElementsByClassName("section-line-menu-button");
     for (let i = 0; i < sectionSelectBtn.length; i++) {

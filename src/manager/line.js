@@ -17,10 +17,10 @@ export default function Line() {
     const lineEnd = document.getElementById("line-end-station-selector").value;
     const lineTable = document.getElementById("line-table");
     if (isSameDestination(lineStart, lineEnd)) {
-      alert(`${alertMessage.SAME_DESTINATION_ERROR}`);
+      alert(alertMessage.SAME_DESTINATION_ERROR);
       return;
     } else if (isLineAlreadyExist(this.lines, lineNameInput)) {
-      alert(`${alertMessage.SAME_LINE_EXIST_ERROR}`);
+      alert(alertMessage.SAME_LINE_EXIST_ERROR);
       return;
     }
     const addHTML = `
@@ -44,6 +44,9 @@ export default function Line() {
     const targetId = event.target.id;
     const targetValue = event.target.value;
     const delLine = document.getElementById(`line${targetId}`);
+    if (!confirm(alertMessage.DELETE_CHECK_MESSAGE)) {
+      return;
+    }
     delLine.remove();
     for (let i = 0; i < this.lines.length; i++) {
       if (this.lines[i].name === targetValue) {

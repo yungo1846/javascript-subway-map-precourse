@@ -45,6 +45,9 @@ export default function Station() {
     const targetId = event.target.id;
     const targetValue = event.target.value;
     const delStation = document.getElementById(`station${targetId}`);
+    if (!confirm(alertMessage.DELETE_CHECK_MESSAGE)) {
+      return;
+    }
     if (isStationOnLine(lines, targetValue)) {
       alert(alertMessage.DELETE_STATION_ON_LINE_MESSAGE);
       return;
