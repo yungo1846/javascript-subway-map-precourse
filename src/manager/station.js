@@ -1,4 +1,4 @@
-import { isSatisfyLength } from "../inputCheck.js";
+import { isSatisfyLength, isStationAlreadyExist } from "../inputCheck.js";
 import { alertMessage } from "../alertMessage.js";
 
 export default function Station() {
@@ -23,6 +23,9 @@ export default function Station() {
     const stationTable = document.getElementById("station-table");
     if (!isSatisfyLength(stationInput)) {
       alert(`${alertMessage.SHORT_LENGTH_ERROR}`);
+      return;
+    } else if (isStationAlreadyExist(this.stations, stationInput)) {
+      alert(`${alertMessage.SAME_STATION_EXIST_ERROR}`);
       return;
     }
     const addHTML = `

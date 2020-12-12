@@ -16,7 +16,7 @@ export default function SubwayMap() {
 
   this.onClickStation = () => {
     resultContainer.innerHTML = "";
-    station.render();
+    station.render(line.lines);
     const stationInputBtn = document.getElementById("station-add-button");
     stationInputBtn.addEventListener("click", station.addStation);
     const stationDelBtns = document.getElementsByClassName("station-delete-button");

@@ -1,13 +1,13 @@
-import { isSameDestination } from "../inputCheck.js";
+import { isSameDestination, isLineAlreadyExist } from "../inputCheck.js";
 import { alertMessage } from "../alertMessage.js";
 
 export default function Line() {
   const resultContainer = document.getElementById("result-container");
   let stations;
   this.lines = [
-    { name: "1호선", start: "인천", end: "소요산", sections: ["인천", "소요산"] },
-    { name: "2호선", start: "시청", end: "신도림", sections: ["시청", "신도림"] },
-    { name: "3호선", start: "대화", end: "오금", sections: ["대화", "오금"] },
+    { name: "1호선", sections: ["인천", "소요산"] },
+    { name: "2호선", sections: ["시청", "신도림"] },
+    { name: "3호선", sections: ["대화", "오금"] },
   ];
   let count = this.lines.length;
 
@@ -19,6 +19,9 @@ export default function Line() {
     if (isSameDestination(lineStart, lineEnd)) {
       alert(`${alertMessage.SAME_DESTINATION_ERROR}`);
       return;
+    } else if (isLineAlreadyExist(this.lines, lineNameInput)) {
+      alert(`${alertMessage.SAME_LINE_EXIST_ERROR}`);
+      return;
     }
     const addHTML = `
           <tr id="line${count}">
@@ -29,8 +32,6 @@ export default function Line() {
           </tr>`;
     this.lines.push({
       name: lineNameInput,
-      start: lineStart,
-      end: lineEnd,
       sections: [lineStart, lineEnd],
     });
     lineTable.insertAdjacentHTML("beforeend", addHTML);
@@ -58,9 +59,11 @@ export default function Line() {
       listHTML += `
           <tr id="line${i}">
             <td><span>${this.lines[i].name}</span></td>
-            <td><span>${this.lines[i].start}</span></td>
-            <td><span>${this.lines[i].end}</span></td>
-            <td><button class="line-delete-button" id="${i}" value=${this.lines[i].name}>삭제</button></td>
+            <td><span>${this.lines[i].sections[0]}</span></td>
+            <td><span>${this.lines[i].sections[this.lines[i].sections.length - 1]}</span></td>
+            <td><button class="line-delete-button" id="${i}" value=${
+        this.lines[i].name
+      }>삭제</button></td>
           </tr>`;
     }
     listHTML += `</table>`;
