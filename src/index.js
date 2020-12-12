@@ -11,6 +11,7 @@ export default function SubwayMap() {
   const resultContainer = document.getElementById("result-container");
 
   this.onClickStation = () => {
+    resultContainer.innerHTML = "";
     station.render();
     const stationInputBtn = document.getElementById("station-add-button");
     stationInputBtn.addEventListener("click", station.addStation);
@@ -21,6 +22,7 @@ export default function SubwayMap() {
   };
 
   this.onClickLine = () => {
+    resultContainer.innerHTML = "";
     line.render(station.stations);
     const lineInputBtn = document.getElementById("line-add-button");
     lineInputBtn.addEventListener("click", line.addLine);
