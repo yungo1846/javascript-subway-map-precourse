@@ -1,9 +1,9 @@
-import { lengthCheck } from "../inputCheck.js";
+import { isSatisfyLength } from "../inputCheck.js";
 import { alertMessage } from "../alertMessage.js";
 
 export default function Station() {
   const resultContainer = document.getElementById("result-container");
-  let stations = [
+  this.stations = [
     "인천",
     "동인천",
     "도원",
@@ -16,40 +16,42 @@ export default function Station() {
     "오이도",
     "당고개",
   ];
-  let count = stations.length;
+  this.count = this.stations.length;
 
   this.addStation = () => {
     const stationInput = document.getElementById("station-name-input").value;
     const stationTable = document.getElementById("station-table");
-    if (!lengthCheck(stationInput)) {
+    if (!isSatisfyLength(stationInput)) {
       alert(`${alertMessage.SHORT_LENGTH_ERROR}`);
       return;
     }
     const addHTML = `
-      <tr id="station${count}">
-        <td><span>${stationInput} </span></td>
-        <td><button class="station-delete-button" id="${count}">삭제</button></td>
+      <tr id="station${this.count}">
+        <td><span>${stationInput}</span></td>
+        <td><button class="station-delete-button" id="${this.count}">삭제</button></td>
       </tr>`;
-    stations.push(stationInput);
+    this.stations.push(stationInput);
     stationTable.insertAdjacentHTML("beforeend", addHTML);
-    const newStation = document.getElementById(`${count}`);
+    const newStation = document.getElementById(`${this.count}`);
     newStation.addEventListener("click", (event) => this.deleteStation(event));
-    count++;
+    this.count++;
   };
 
   this.deleteStation = (event) => {
     const targetId = event.target.id;
+    const targetValue = event.target.value;
     const delStation = document.getElementById(`station${targetId}`);
     delStation.remove();
+    this.stations.splice(this.stations.indexOf(targetValue), 1);
   };
 
   this.printStationList = () => {
     let listHTML = `<table border="1" id="station-table"><th>역 이름</th><th>설정</th>`;
-    for (let i = 0; i < stations.length; i++) {
+    for (let i = 0; i < this.stations.length; i++) {
       listHTML += `
       <tr id="station${i}">
-        <td><span>${stations[i]} </span></td>
-        <td><button class="station-delete-button" id="${i}">삭제</button></td>
+        <td><span>${this.stations[i]} </span></td>
+        <td><button class="station-delete-button" id="${i}" value="${this.stations[i]}">삭제</button></td>
       </tr>`;
     }
     listHTML += `</table>`;
