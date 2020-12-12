@@ -4,4 +4,6 @@ export const alertMessage = {
   SHORT_LENGTH_ERROR: `최소 ${constant.minLength} 글자 이상 입력해야 합니다.`,
   DELETE_CHECK_MESSAGE: "정말로 삭제하시겠습니까?",
   SAME_DESTINATION_ERROR: `상행과 하행이 같습니다. 다시 입력해주세요.`,
+  SAME_LINE_EXIST_ERROR: "이미 같은 이름을 가진 노선이 있습니다.",
+  SAME_SECTION_EXIST_ERROR: "이미 같은 구간이 등록되어 있습니다.",
 };

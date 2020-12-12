@@ -5,9 +5,9 @@ export default function Line() {
   const resultContainer = document.getElementById("result-container");
   let stations;
   this.lines = [
-    { line: "1호선", start: "인천", end: "소요산" },
-    { line: "2호선", start: "시청", end: "신도림" },
-    { line: "3호선", start: "대화", end: "오금" },
+    { name: "1호선", start: "인천", end: "소요산", sections: ["인천", "소요산"] },
+    { name: "2호선", start: "시청", end: "신도림", sections: ["시청", "신도림"] },
+    { name: "3호선", start: "대화", end: "오금", sections: ["대화", "오금"] },
   ];
   let count = this.lines.length;
 
@@ -25,11 +25,16 @@ export default function Line() {
             <td><span>${lineNameInput}</span></td>
             <td><span>${lineStart}</span></td>
             <td><span>${lineEnd}</span></td>
-            <td><button class="line-delete-button" id="${this.count}">삭제</button></td>
+            <td><button class="line-delete-button" id="${count}" value=${lineNameInput}>삭제</button></td>
           </tr>`;
-    this.lines.push({ line: lineNameInput, start: lineStart, end: lineEnd });
+    this.lines.push({
+      name: lineNameInput,
+      start: lineStart,
+      end: lineEnd,
+      sections: [lineStart, lineEnd],
+    });
     lineTable.insertAdjacentHTML("beforeend", addHTML);
-    const newLine = document.getElementById(`${this.count}`);
+    const newLine = document.getElementById(`${count}`);
     newLine.addEventListener("click", (event) => this.deleteLine(event));
     count++;
   };
@@ -38,10 +43,9 @@ export default function Line() {
     const targetId = event.target.id;
     const targetValue = event.target.value;
     const delLine = document.getElementById(`line${targetId}`);
-    console.log(targetValue);
     delLine.remove();
     for (let i = 0; i < this.lines.length; i++) {
-      if (this.lines[i].line === targetValue) {
+      if (this.lines[i].name === targetValue) {
         this.lines.splice(i, 1);
       }
     }
@@ -53,10 +57,10 @@ export default function Line() {
     for (let i = 0; i < this.lines.length; i++) {
       listHTML += `
           <tr id="line${i}">
-            <td><span>${this.lines[i].line}</span></td>
+            <td><span>${this.lines[i].name}</span></td>
             <td><span>${this.lines[i].start}</span></td>
             <td><span>${this.lines[i].end}</span></td>
-            <td><button class="line-delete-button" id="${i}" value=${this.lines[i].line}>삭제</button></td>
+            <td><button class="line-delete-button" id="${i}" value=${this.lines[i].name}>삭제</button></td>
           </tr>`;
     }
     listHTML += `</table>`;
@@ -69,11 +73,11 @@ export default function Line() {
             <input type="text" id="line-name-input" placeholder="노선 이름을 입력해주세요."></input></div><br>
           <div><span>상행 종점</span>
             <select id="line-start-station-selector">
-            ${stations.map((station, i) => `<option id=${i} value=${station}>${station}</option>`)}
+            ${stations.map((station) => `<option value=${station}>${station}</option>`).join("")}
             </select></div><br>
           <div><span>하행 종점</span>
             <select id="line-end-station-selector">
-            ${stations.map((station, i) => `<option id=${i} value=${station}>${station}</option>`)}
+            ${stations.map((station) => `<option value=${station}>${station}</option>`).join("")}
             </select></div><br>
           <button id="line-add-button">노선 추가</button>
           <h2>🚉 지하철 노선 목록</h2>
